@@ -1,11 +1,16 @@
 import React from 'react'
 
-export const Resultado = () => {
+const Resultado = ({ jugadaUsuario, jugadaComputadora, resultado }) => {
   return (
     <div>
-        <div id="jugador">Aqui iria la jugada del jugador</div>
-        <div id="computadora">Aqui iria la jugada de la computadora</div>
-        <div id="resultado">Aqui iria el resultado</div>
+      {jugadaUsuario && jugadaComputadora && (
+        <>
+          <p>Tu elección: {jugadaUsuario}</p>
+          <p>Elección de la computadora: {jugadaComputadora}</p>
+          <p>Resultado: {resultado}</p>
+        </>
+      )}
     </div>
   )
 }
+export default Resultado

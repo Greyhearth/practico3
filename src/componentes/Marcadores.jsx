@@ -1,11 +1,12 @@
 import React from 'react'
 
-export const Marcadores = () => {
+const Marcadores = ({ contadorJugador, contadorComputadora }) => {
   return (
-    <div>
-        <div id="victoriasJugador">Aqui ira el contador de victorias del Jugador</div>
-        <div id="Empates">Aqui ira el contador de empates</div>
-        <div id="victoriasComputadora">Aqui ira el contador de victorias de la computadora</div>
+    <div className="marcadores">
+      <p>Victorias Jugador: {contadorJugador}</p>
+      <p>Victorias Computadora: {contadorComputadora}</p>
     </div>
   )
 }
+
+export default Marcadores;

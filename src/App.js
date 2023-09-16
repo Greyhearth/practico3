@@ -1,10 +1,8 @@
 import './App.css';
 import Encabezado from './componentes/Encabezado';
 import Nombre from './componentes/Nombre';
-import { Jugadas } from './componentes/Jugadas';
-import { Marcadores } from './componentes/Marcadores';
-import { Reiniciar } from './componentes/Reiniciar';
-import { Resultado } from './componentes/Resultado';
+import PiedraPapelTijera from './componentes/PiedraPapelTijera';
+
 
 
 function App() {
@@ -20,13 +18,7 @@ function App() {
       <main className="App-main">
         <Nombre/>
 
-        <Jugadas/>
-
-        <Resultado/>
-
-        <Marcadores/>
-
-        <Reiniciar/>
+        <PiedraPapelTijera/>
       </main>
     </div>
   );
