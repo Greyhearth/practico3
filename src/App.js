@@ -1,10 +1,16 @@
-// import logo from './logo.svg';
 import './App.css';
-import { Encabezado } from './componentes/Encabezado';
+import Encabezado from './componentes/Encabezado';
+import Nombre from './componentes/Nombre';
 import { Jugadas } from './componentes/Jugadas';
-import { Nombre } from './componentes/Nombre';
+import { Marcadores } from './componentes/Marcadores';
+import { Reiniciar } from './componentes/Reiniciar';
+import { Resultado } from './componentes/Resultado';
+
 
 function App() {
+  /* Declaración de constantes y variables */
+
+
   return (
     <div className="App">
       <header className="App-header">
@@ -15,6 +21,12 @@ function App() {
         <Nombre/>
 
         <Jugadas/>
+
+        <Resultado/>
+
+        <Marcadores/>
+
+        <Reiniciar/>
       </main>
     </div>
   );
