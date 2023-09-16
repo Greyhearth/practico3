@@ -1,37 +1,33 @@
 import React, { useState } from 'react';
 
-const Nombre = () => {
-    const [nombreTemp, setNombreTemp] = useState("");
-    const [nombre, setNombre] = useState("Invitado");
-    const [error, setError] = useState("");
-    const [saludo, setSaludo] = useState(false);
- 
-
-    function cambiarNombre (nuevoNombre){
-     
-        if ((nombreTemp.trim() === '')||(nombreTemp.trim() === 'Invitado')){
-            setError('Por favor, ingrese su nombre');
-            setSaludo(false);
-        } else{
-            setNombre(nombreTemp);
-            setNombreTemp("");
-            setError("");
-            setSaludo(true);
-        }
-
-
+const Nombre = ({ ingresarUsuario }) => {
+  const [nombre, setNombre] = useState('');
+  const [esValido, setEsValido] = useState(false);
+//Vuelve válido un nombre si se ha escrito algo.
+  const cambioNombre = (e) => {
+    const nombreTemp = e.target.value;
+    //Como React renderiza constantemente, debí usar una variable más para guardar el nombre escrito hasta ser ingresado.
+    setNombre(nombreTemp);
+    //Verifica que no este vacío ni sean sólo espacios en blanco.
+    setEsValido(nombreTemp.trim() !== '');
+  };
+//Si el nombre es válido, permite su ingreso y se inicia el juego.
+  const ingresarNombre = (e) => {
+    e.preventDefault();
+    if (esValido) {
+        ingresarUsuario(nombre);
     }
+  };
 
-    return (
+  return (
     <div>
-        <label for="nombre">Bienvenido, para iniciar, ingrese su nombre: 
-            <input type="text" name="nombre" value={nombreTemp} id="nombre" required="required" onChange={e => setNombreTemp(e.target.value)} />
-            <input type="button" name="ingresar" value="Ingresar" onClick={e => cambiarNombre(nombreTemp)}/>
-        </label>
-        {error && <p className="error">{error}</p>}
-        {saludo && <p className="saludo">Saludos {nombre}, elija una de las siguentes jugadas:</p>}
+      <h2>Ingresa tu nombre para comenzar</h2>
+      <form onSubmit={ingresarNombre}>
+        <input type="text" placeholder="Ingresa tu nombre" value={nombre} onChange={cambioNombre} />
+        <button type="submit" disabled={!esValido}>Iniciar Juego</button>
+      </form>
     </div>
-  )
-}
+  );
+};
 
 export default Nombre;

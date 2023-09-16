@@ -4,41 +4,45 @@ import Resultado from './Resultado';
 import piedraN from './imagenes/piedraNegro.png'
 import papelN from './imagenes/papelNegro.png'
 import tijeraN from './imagenes/tijeraNegro.png'
+import piedraG from './imagenes/piedraGris.png'
+import papelG from './imagenes/papelGris.png'
+import tijeraG from './imagenes/tijeraGris.png'
 
 
-const PiedraPapelTijera = () => {
+const PiedraPapelTijera = ({nombreUsuario}) => {
+  //Declaración de variables y constantes a usar.
   const jugadas = ['piedra', 'papel', 'tijera'];
   const [jugadaUsuario, setJugadaUsuario] = useState(null);
   const [jugadaComputadora, setJugadaComputadora] = useState(null);
   const [resultado, setResultado] = useState(null);
+  const [resultadoFinal, setResultadoFinal] = useState(null);
   const [contadorJugador, setContadorJugador] = useState(0);
   const [contadorComputadora, setContadorComputadora] = useState(0);
-  const [ronda, setRonda] = useState(1);
+  const [contadorEmpates, setContadorEmpates] = useState(0);
+  const [piedra, setPiedra] = useState(piedraN);
+  const [papel, setPapel] = useState(papelN);
+  const [tijera, setTijera] = useState(tijeraN);
 
   useEffect(() => {
-    if (ronda > 5) {
-      // Corrobora la ronda y verifica si hay algún ganador
-      if (contadorJugador > contadorComputadora) {
-        setResultado('¡Ganaste el juego!');
-      } else if (contadorJugador < contadorComputadora) {
-        setResultado('La computadora ganó el juego.');
-      } else {
-        setResultado('El juego terminó en empate.');
+    // Verifica si hay algún ganador tras cada ronda
+    if (contadorJugador >= 3) {
+        setResultadoFinal('¡Ganaste el juego!');
+      } else if (contadorComputadora >= 3) {
+        setResultadoFinal('La computadora ganó el juego.');
       }
-    }
-  }, [ronda, contadorJugador, contadorComputadora]);
-
+  }, [contadorJugador, contadorComputadora]);
 
   const eleccionJugada = (jugada) => {
     //Función que obtiene, al azar, una jugada para la computadora.
     const obtenerJugadaComputadora = jugadas[Math.floor(Math.random() * 3)]; //en base a un número aleatorio multiplicado por 3 y redondeado hacia abajo, elige un elemento del array jugadas
-    setJugadaUsuario(jugada);
     setJugadaComputadora(obtenerJugadaComputadora);
+    setJugadaUsuario(jugada);
 
     // Determinación del ganador de cada ronda
     //Primero corrobora un empate
     if (jugada === obtenerJugadaComputadora) {
       setResultado('Empate');
+      setContadorEmpates(contadorEmpates+1);
     //Luego verifica si gana el usuario
     } else if (
       (jugada === 'piedra' && obtenerJugadaComputadora === 'tijera') ||
@@ -47,28 +51,55 @@ const PiedraPapelTijera = () => {
     ) {
       setResultado('el usuario gana la ronda');
       setContadorJugador(contadorJugador+1);
-    //Finalmente, le da la victoria a la computadora
+    //Finalmente, le da la victoria a la computadora si no se cumple otra condición
     } else {
       setResultado('la computadora gana la ronda');
       setContadorComputadora(contadorComputadora+1);
     }
-    //Suma 1 al contador de rondas
-    setRonda(ronda+1);
+  };
+
+  const reiniciarJuego = () => {
+    setJugadaUsuario(null);
+    setJugadaComputadora(null);
+    setResultado(null);
+    setContadorJugador(0);
+    setContadorComputadora(0);
+    setContadorEmpates(0);
+    setResultadoFinal(null);
+    setPiedra(piedraN);
+    setPapel(papelN);
+    setTijera(tijeraN);
   };
 
   return (
     <div>
       <div className="jugadas">
-        <button onClick={() => eleccionJugada('piedra')}><img src={piedraN} alt='Piedra'/></button>
-        <button onClick={() => eleccionJugada('papel')}><img src={papelN} alt='Papel'/></button>
-        <button onClick={() => eleccionJugada('tijera')}><img src={tijeraN} alt='Tijera'/></button>
+        <p>Saludos {nombreUsuario}, elije una de las siguientes jugadas: </p>
       </div>
+    {(resultadoFinal===null) &&
+      <div className="jugadas">
+        <button onClick={() => {eleccionJugada('piedra'); setPiedra(piedraG); setPapel(papelN); setTijera(tijeraN)}}><img src={piedra} alt='Piedra'/></button>
+        <button onClick={() => {eleccionJugada('papel'); setPiedra(piedraN); setPapel(papelG); setTijera(tijeraN)}}><img src={papel} alt='Papel'/></button>
+        <button onClick={() => {eleccionJugada('tijera'); setPiedra(piedraN); setPapel(papelN); setTijera(tijeraG)}}><img src={tijera} alt='Tijera'/></button>
+      </div>
+    }
       <Resultado
         jugadaUsuario={jugadaUsuario}
         jugadaComputadora={jugadaComputadora}
         resultado={resultado}
       />
-      <Marcadores contadorJugador={contadorJugador} contadorComputadora={contadorComputadora} />
+      <Marcadores 
+        contadorJugador={contadorJugador} 
+        contadorEmpates={contadorEmpates} 
+        contadorComputadora={contadorComputadora} />
+      {resultadoFinal && (
+        <>
+            <p>{resultadoFinal}</p>
+        </>
+        )}
+        <div className="reiniciar">
+            <button onClick={() => reiniciarJuego()}>Reiniciar Juego</button>
+      </div>
     </div>
   );
 };

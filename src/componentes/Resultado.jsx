@@ -1,5 +1,5 @@
 import React from 'react'
-
+//Toma los valores de las jugadas y el resultado de cada ronda y los muestra por pantalla.
 const Resultado = ({ jugadaUsuario, jugadaComputadora, resultado }) => {
   return (
     <div>
