@@ -7,7 +7,32 @@ import tijeraN from './imagenes/tijeraNegro.png'
 import piedraG from './imagenes/piedraGris.png'
 import papelG from './imagenes/papelGris.png'
 import tijeraG from './imagenes/tijeraGris.png'
+import styled from 'styled-components';
 
+const Saludo = styled.p`
+  color: #043d72;
+  font-weight: bold;
+  font-size: min(5vw, 1em);
+`
+
+const Reinicio = styled.p`
+  font-size: min(5vw, 0.7em);
+  font-weight: bold;
+  margin-top:10px;
+`
+
+const Boton = styled.button`
+  border: none;
+  border-radius: 6px;
+  background-color: #0761b6;
+  color: #ffffff;
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  &:hover {
+    background-color: #003669;
+}
+`
 
 const PiedraPapelTijera = ({nombreUsuario}) => {
   //Declaración de variables y constantes a usar.
@@ -45,9 +70,9 @@ const PiedraPapelTijera = ({nombreUsuario}) => {
       setContadorEmpates(contadorEmpates+1);
     //Luego verifica si gana el usuario
     } else if (
-      (jugada === 'piedra' && obtenerJugadaComputadora === 'tijera') ||
-      (jugada === 'papel' && obtenerJugadaComputadora === 'piedra') ||
-      (jugada === 'tijera' && obtenerJugadaComputadora === 'papel')
+      (jugada === jugadas[0] && obtenerJugadaComputadora === jugadas[2]) ||
+      (jugada === jugadas[1] && obtenerJugadaComputadora === jugadas[0]) ||
+      (jugada === jugadas[2] && obtenerJugadaComputadora === jugadas[1])
     ) {
       setResultado('el usuario gana la ronda');
       setContadorJugador(contadorJugador+1);
@@ -74,7 +99,7 @@ const PiedraPapelTijera = ({nombreUsuario}) => {
   return (
     <div>
       <div className="jugadas">
-        <p>Saludos {nombreUsuario}, elije una de las siguientes jugadas: </p>
+        <Saludo>Saludos {nombreUsuario}, elije una de las siguientes jugadas: </Saludo>
       </div>
     {(resultadoFinal===null) &&
       <div className="jugadas">
@@ -94,11 +119,12 @@ const PiedraPapelTijera = ({nombreUsuario}) => {
         contadorComputadora={contadorComputadora} />
       {resultadoFinal && (
         <>
-            <p>{resultadoFinal}</p>
+            <Saludo>{resultadoFinal}</Saludo>
+            <Reinicio>Presiona "Reiniciar Juego" para volver a jugar</Reinicio>
         </>
         )}
         <div className="reiniciar">
-            <button onClick={() => reiniciarJuego()}>Reiniciar Juego</button>
+            <Boton onClick={() => reiniciarJuego()}>Reiniciar Juego</Boton>
       </div>
     </div>
   );
