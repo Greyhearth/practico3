@@ -15,6 +15,13 @@ const Saludo = styled.p`
   font-size: min(5vw, 1em);
 `
 
+const Botones = styled.button`
+  border-radius: 22px;
+  &:hover {
+  border: 2px solid orange;
+}
+`
+
 const Reinicio = styled.p`
   font-size: min(5vw, 0.7em);
   font-weight: bold;
@@ -103,9 +110,9 @@ const PiedraPapelTijera = ({nombreUsuario}) => {
       </div>
     {(resultadoFinal===null) &&
       <div className="jugadas">
-        <button onClick={() => {eleccionJugada('piedra'); setPiedra(piedraG); setPapel(papelN); setTijera(tijeraN)}}><img src={piedra} alt='Piedra'/></button>
-        <button onClick={() => {eleccionJugada('papel'); setPiedra(piedraN); setPapel(papelG); setTijera(tijeraN)}}><img src={papel} alt='Papel'/></button>
-        <button onClick={() => {eleccionJugada('tijera'); setPiedra(piedraN); setPapel(papelN); setTijera(tijeraG)}}><img src={tijera} alt='Tijera'/></button>
+        <Botones onClick={() => {eleccionJugada('piedra'); setPiedra(piedraG); setPapel(papelN); setTijera(tijeraN)}}><img src={piedra} alt='Piedra'/></Botones>
+        <Botones onClick={() => {eleccionJugada('papel'); setPiedra(piedraN); setPapel(papelG); setTijera(tijeraN)}}><img src={papel} alt='Papel'/></Botones>
+        <Botones onClick={() => {eleccionJugada('tijera'); setPiedra(piedraN); setPapel(papelN); setTijera(tijeraG)}}><img src={tijera} alt='Tijera'/></Botones>
       </div>
     }
       <Resultado
